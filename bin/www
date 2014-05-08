@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 var debug = require('debug')('my-application');
 var app = require('../app');
+var redis = require('redis');
+var redisClient = redis.createClient();
 
 app.set('port', process.env.PORT || 3000);
 
@@ -8,9 +10,42 @@ var server = require('socket.io').listen(app.listen(app.get('port')), function()
   debug('Express server listening on port ' + server.address().port);
 });
 
-server.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
+
+server.sockets.on('connection', function (client) {
+
+  client.on('login', function(data){
+    client.set('nickname', data.name);
+
+    console.log(data.name + " joined the room");
+
+    client.broadcast.emit("add chatter", data.name);
+
+    redisClient.smembers("nicknames", function(err, names){
+      names.forEach(function(name){
+        client.emit("add chatter", name);
+      });
+    });
+
+    redisClient.sadd("nicknames", data.name); 
   });
+
+  client.on('messages', function(data){
+    client.get("nickname", function(err, name){
+      client.broadcast.emit("chat", name + ": ");
+    })
+  });
+
+  client.on('disconnect', function(name){
+    client.get("nickname", function(err, name){
+      console.log(name + " has been removed")
+      client.broadcast.emit("remove chatter", name);
+
+      redisClient.srem("nicknames", name);
+    });
+  });
+
+  // socket.emit('news', { hello: 'world' });
+  // socket.on('my other event', function (data) {
+  //   console.log(data);
+  // });
 });

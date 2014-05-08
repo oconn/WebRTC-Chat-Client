@@ -8,3 +8,30 @@ body {
 a {
   color: #00B7FF;
 }
+
+// Index page
+
+#title-area { 
+  h1 { 
+    text-align: center;
+  }
+}
+
+#main-window {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 3px solid black;
+  
+  #chat-window {
+    min-height: 400px;
+    
+    #video-dispaly {
+      height: 80%;
+    }
+    
+    #chat-display {
+      height: 20%;
+    }
+  }
+}
