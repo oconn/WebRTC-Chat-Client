@@ -26,26 +26,24 @@ server.sockets.on('connection', function (client) {
       });
     });
 
+    client.emit("add chatter", data.name);
+
     redisClient.sadd("nicknames", data.name); 
   });
 
-  client.on('messages', function(data){
+  client.on('messages', function(message){
     client.get("nickname", function(err, name){
-      client.broadcast.emit("chat", name + ": ");
-    })
+      client.broadcast.emit("chat", name + ": " + message);
+      client.emit("chat", "SELF: " + message );
+    });
   });
 
   client.on('disconnect', function(name){
     client.get("nickname", function(err, name){
       console.log(name + " has been removed")
       client.broadcast.emit("remove chatter", name);
-
+      client.broadcast.emit("chat", name + " has left the room");
       redisClient.srem("nicknames", name);
     });
   });
-
-  // socket.emit('news', { hello: 'world' });
-  // socket.on('my other event', function (data) {
-  //   console.log(data);
-  // });
 });

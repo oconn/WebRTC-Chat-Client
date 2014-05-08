@@ -15,15 +15,17 @@ block content
   div(class="row" id="main-window")
     div(class="col-xs-12 col-md-10" id="chat-window")
       div(class="col-xs-12" id="video-display") 
-        h2 Video Area     
+        h2 Video Area 
+
       div(class="col-xs-12" id="chat-display")
         div(id="chat-window")
-
-        form(class="textForm" role="form")
-          div(class="form-group col-xs-11")
-            input(type="text" id="message" class="form-control" placeholder="Message")
-          div(class="form-group col-xs-1")
-            input(type="submit" class="btn")
+          div(id="messages")
+            
+          form(class="textForm" role="form")
+            div(class="form-group col-xs-11")
+              input(type="text" id="message" class="form-control" placeholder="Message")
+            div(class="form-group col-xs-1")
+              input(type="submit" class="btn" value="Submit")
 
     div(class="col-xs-12 col-md-2")
       h2 Chatters
