@@ -16,7 +16,7 @@ var server = http.createServer(app).listen(app.get('port'), function(){
 var io = require('socket.io').listen(server);
 
 
-server.sockets.on('connection', function (client) {
+io.sockets.on('connection', function (client) {
 
   client.on('login', function(data){
     client.set('nickname', data.name);
