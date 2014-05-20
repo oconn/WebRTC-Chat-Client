@@ -3,6 +3,7 @@ var debug = require('debug')('my-application');
 var app = require('../app');
 var redis = require('redis');
 var redisClient = redis.createClient();
+var http = require('http');
 
 redisClient.del("nicknames");
 
