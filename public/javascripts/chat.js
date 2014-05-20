@@ -29,13 +29,13 @@ function listenForChatter(){
         <p>" + msg + "</p>\
       </div>\
       ");
-  })
+  });
 
   $(".textForm").on("submit", function(e){
     e.preventDefault();
 
     var message = $.trim($("#message").val());
-
+    $("#message").val("");
     socket.emit("messages", message);
-  })
+  });
 }
