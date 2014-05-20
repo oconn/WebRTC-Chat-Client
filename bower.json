@@ -5,6 +5,7 @@
     "modernizr": "*",
     "bootstrap": "*",
     "fontawesome": "*",
-    "normalize.css": "*"
+    "normalize.css": "*",
+    "socket.io": "*"
   }
 }
