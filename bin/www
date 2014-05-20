@@ -8,9 +8,11 @@ redisClient.del("nicknames");
 
 app.set('port', process.env.PORT || 3001);
 
-var server = require('socket.io').listen(app.listen(app.get('port')), function() {
-  debug('Express server listening on port ' + server.address().port);
+var server = http.createServer(app).listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'));
 });
+
+var io = require('socket.io').listen(server);
 
 
 server.sockets.on('connection', function (client) {
